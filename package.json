@@ -1,5 +1,5 @@
 {
-  "name": "react-native-wechat",
+  "name": "rnwechat",
   "version": "1.9.12",
   "description": "react-native library for wechat app",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/weflex/react-native-wechat.git"
+    "url": "git+ssh://git@github.com/ttylikl/react-native-wechat.git"
   },
   "keywords": [
     "wechat",
@@ -32,6 +32,10 @@
     {
       "name": "Deng Yun",
       "email": "tdzl2003@gmail.com"
+    },
+    {
+      "name": "ttylikl",
+      "email": "ttylikl@gmail.com"
     }
   ],
   "license": "MIT",
