@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.internal.Files;
@@ -78,6 +78,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     private String appId;
 
     private IWXAPI api = null;
+    private final static String TAG = "HUIYU";
     private final static String NOT_REGISTERED = "registerApp required.";
     private final static String INVOKE_FAILED = "WeChat API invoke returns false.";
     private final static String INVALID_ARGUMENT = "invalid argument.";
@@ -272,6 +273,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
 
     @ReactMethod
     public void shareToSession(ReadableMap data, Callback callback) {
+        Log.d(TAG, "shareToSession!!!");
         if (api == null) {
             callback.invoke(NOT_REGISTERED);
             return;
@@ -333,7 +335,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         }
 
         if (uri != null) {
-            this._getImage(uri, new ResizeOptions(100, 100), new ImageCallback() {
+            this._getImage(uri, new ResizeOptions(500, 400), new ImageCallback() {
                 @Override
                 public void invoke(@Nullable Bitmap bitmap) {
                     WeChatModule.this._share(scene, data, bitmap, callback);
@@ -441,6 +443,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         } else if (type.equals("file")) {
             mediaObject = __jsonToFileMedia(data);
         } else if (type.equals("miniProgram")) {
+            Log.d(TAG, "miniProgram is called");
             mediaObject = __jsonToMiniProgramMedia(data);
         }
 
@@ -588,6 +591,11 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         miniProgramObj.webpageUrl = data.getString("webpageUrl"); // 兼容低版本的网页链接
         miniProgramObj.userName = data.getString("userName");    // 小程序原始id
         miniProgramObj.path = data.getString("path");         //小程序页面路径
+        if (data.hasKey("miniprogramType")) { 
+            // 正式版:0，测试版:1，体验版:2
+            // 正式版: WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE; 测试版: WXMiniProgramObject.MINIPROGRAM_TYPE_TEST; 预览版: WXMiniProgramObject.MINIPROGRAM_TYPE_PREVIEW
+            miniProgramObj.miniprogramType = data.getInt("miniprogramType");
+        }
         return miniProgramObj;
     }
 
