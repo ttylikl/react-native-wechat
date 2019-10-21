@@ -70,7 +70,7 @@ RCT_EXPORT_METHOD(registerAppWithDescription:(NSString *)appid
                   :(NSString *)appdesc
                   :(RCTResponseSenderBlock)callback)
 {
-    callback(@[[WXApi registerApp:appid withDescription:appdesc] ? [NSNull null] : INVOKE_FAILED]);
+    callback(@[[WXApi registerApp:appid] ? [NSNull null] : INVOKE_FAILED]);
 }
 
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
@@ -289,7 +289,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
             NSString * webpageUrl = aData[RCTWXShareWebpageUrl];
             WXMiniProgramObject *miniProgramObj = [WXMiniProgramObject object];
             miniProgramObj.webpageUrl = webpageUrl; // 兼容低版本的网页链接
-            miniProgramObj.miniprogramType = aData[@"miniprogramType"]; //WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
+            miniProgramObj.miniProgramType = [aData[@"miniprogramType"] intValue]; //WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
             miniProgramObj.userName = aData[@"userName"];     // 小程序原始id
             miniProgramObj.path = aData[@"path"];
             [self shareToWeixinWithMediaMessage:aScene
