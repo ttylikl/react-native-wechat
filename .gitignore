@@ -2,6 +2,9 @@
 node_modules
 /android/build
 /android/RCTWeChat.iml
+.gradle
+.idea
+local.properties
 
 # ios
 ios/build
